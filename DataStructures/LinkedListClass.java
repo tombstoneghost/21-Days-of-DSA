@@ -1,4 +1,7 @@
-class LinkedList<E>{
+//import java.util.Iterator;
+//import java.util.NoSuchElementException;
+
+class LinkedList<E> {
     
     //Initializing Node
     class Node<T> {
@@ -146,6 +149,33 @@ class LinkedList<E>{
 
         return tail.data;
     }
+
+    /*
+        To use forEach loop to print the numbers we added in our list,
+        we can use the below mentioned inner-class.
+    */
+
+    /*class IteratorHelper implements Iterator<E> {
+        Node<E> index;
+
+        public IteratorHelper() {
+            index = head;
+        }
+
+        public boolean hasNext() {
+            return (index != null);
+        }
+
+        public E next() {
+            if(!hasNext())
+                throw new NoSuchElementException();
+
+            E value = index.data;
+            index = index.next;
+
+            return value;
+        }
+    }*/
 }
 
 public class LinkedListClass {
@@ -183,6 +213,10 @@ public class LinkedListClass {
             list.addFirst(i);
             System.out.println("Value Added: " + i);
         }
+
+        /*for(int i : list) {
+            System.out.println(i);
+        }*/
 
         System.out.println("Removing value 7");
         int r = list.remove(7);
