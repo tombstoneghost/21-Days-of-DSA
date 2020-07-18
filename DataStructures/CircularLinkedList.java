@@ -19,7 +19,7 @@ class CirLinkedList<E> {
     }
 
     //Adding at front
-    public void addFront(E obj) {
+    public void addFirst(E obj) {
         Node<E> node = new Node<E>(obj);
 
         //If List is Empty
@@ -130,6 +130,7 @@ class CirLinkedList<E> {
 
     //To Peek at head
     public E peekFirst() {
+
         if(head == null) {
             return null;
         }
@@ -139,6 +140,7 @@ class CirLinkedList<E> {
 
     //To Peek at tail
     public E peekLast() {
+        
         if(tail == null) {
             return null;
         }
@@ -149,7 +151,7 @@ class CirLinkedList<E> {
 
 public class CircularLinkedList {
     public static void main(String[] args) {
-        LinkedList<Integer> list = new LinkedList<Integer>();
+        CirLinkedList<Integer> list = new CirLinkedList<Integer>();
 
         int n = 10;
         
