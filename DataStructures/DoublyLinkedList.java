@@ -1,16 +1,13 @@
-//import java.util.Iterator;
-//import java.util.NoSuchElementException;
-
-class LinkedList<E> {
-    
-    //Initializing Node
+class DoubleLinkedList<E> {
     class Node<T> {
         T data;
         Node<T> next;
+        Node<T> prev;
 
         public Node(T obj) {
             data = obj;
             next = null;
+            prev = null;
         }
     }
 
@@ -18,22 +15,29 @@ class LinkedList<E> {
     private Node<E> tail;
     private int currentSize;
 
-    public LinkedList() {
+    DoubleLinkedList() {
         head = null;
+        tail = null;
         currentSize = 0;
     }
 
-    //Adding at the Front
+    //Adding Node at Front
     public void addFirst(E obj) {
         Node<E> node = new Node<E>(obj);
 
         node.next = head;
+        node.prev = null;
+        
+        if(head != null) {
+            head.prev = node;
+        }
+
         head = node;
 
         currentSize++;
     }
 
-    //Adding at the Last
+    //Adding Node at Last
     public void addLast(E obj) {
         Node<E> node = new Node<E>(obj);
 
@@ -44,77 +48,79 @@ class LinkedList<E> {
             return;
         }
 
-        //The below code give us the complexity of O(1)
         tail.next = node;
+        node.prev = tail;
+
         tail = node;
+        tail.next = null;
+
         currentSize++;
     }
 
-    //Remove from Front
+    //Remove Node from Front
     public E removeFirst() {
         if(head == null)
             return null;
-        
+
         E temp = head.data;
 
         if(head == tail) {
             head = tail = null;
-        } else {
-            head = head.next;
+            return null;
         }
+
+        head = head.next;
+        head.prev = null;
 
         currentSize--;
 
         return temp;
     }
 
-    //Remove from Last
+    //Remove Node from Last
     public E removeLast() {
-        if(head == null) 
+        if(head == null)
             return null;
-        
+
         if(head == tail)
             return removeFirst();
         
-        Node<E> current = head;
-        Node<E> previous = null;
+        E temp = tail.data;
 
-        while(current != tail) {
-            previous = current;
-            current = current.next;
-        }
-
-        previous.next = null;
-        tail = previous;
+        tail = tail.prev;
+        tail.next = null;
 
         currentSize--;
 
-        return current.data;
+        return temp;
     }
 
-    //Remove some object
+    //Remove a Particular Node
     public E remove(E obj) {
-        Node<E> current = head; 
-        Node<E> previous = null;
+        if(head == null)
+            return null;
+
+        Node<E> current = head;
 
         while(current != null) {
             if(obj.equals(current.data)) {
-                if(head == current)
+                if(head == current) {
                     return removeFirst();
-                
-                if(current == tail)
+                }
+
+                if(tail == current) {
                     return removeLast();
-                
+                }
+
                 currentSize--;
 
-                previous.next = current.next;
-
+                current.prev.next = current.next;
+                
                 return current.data;
             }
-            previous = current;
             current = current.next;
-
         }
+
         return null;
     }
 
@@ -149,36 +155,9 @@ class LinkedList<E> {
 
         return tail.data;
     }
-
-    /*
-        To use forEach loop to print the numbers we added in our list,
-        we can use the below mentioned inner-class.
-    */
-
-    /*class IteratorHelper implements Iterator<E> {
-        Node<E> index;
-
-        public IteratorHelper() {
-            index = head;
-        }
-
-        public boolean hasNext() {
-            return (index != null);
-        }
-
-        public E next() {
-            if(!hasNext())
-                throw new NoSuchElementException();
-
-            E value = index.data;
-            index = index.next;
-
-            return value;
-        }
-    }*/
 }
 
-public class LinkedListClass {
+public class DoublyLinkedList {
     public static void main(String[] args) {
         LinkedList<Integer> list = new LinkedList<Integer>();
 
